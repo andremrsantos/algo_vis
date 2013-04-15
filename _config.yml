@@ -1,0 +1,29 @@
+safe:        false
+auto:        false
+server:      false
+
+source:      .
+destination: ./_site
+plugins:     ./_plugins
+
+future:      true
+lsi:         false
+pygments:    true
+markdown:    maruku
+permalink:   date
+
+paginate:	 10
+
+exclude: 	[".gitignore", "README.md", "Rakefile", "changelog.md", "Gemfile", "Gemfile.lock", "Procfile"]
+
+maruku:
+  use_tex:    false
+  use_divs:   false
+  png_engine: blahtex
+  png_dir:    images/latex
+  png_url:    /images/latex
+
+assets:
+  compress:
+    css:  sass
+    js:   uglifier
