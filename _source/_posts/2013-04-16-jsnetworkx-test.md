@@ -8,6 +8,7 @@ styles: [canvas/canvas]
 ---
 {% javascript vendor/d3.min %}
 {% javascript vendor/jsnetworkx %}
+
 <script type="text/javascript">
     $(function() {
         $('#canvas').click(function() { alert('ola'); });
