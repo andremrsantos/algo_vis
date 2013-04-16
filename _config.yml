@@ -2,9 +2,22 @@ safe:        false
 auto:        false
 server:      false
 
-source:      .
-destination: ./_site
-plugins:     ./_plugins
+source:      ./_source
+destination: ./public
+plugins:     ./_source/_plugins
+
+title : Algo Class
+tagline: learning and visualizing algorithms
+author :
+  name : André M. Ribeiro dos Santos
+  email : andremrsantos@gmail.com
+  github : andremrsantos
+  twitter : andremrsantos
+  gravatar: andremrsantos@gmail.com
+
+comments :
+  disqus :
+    short_name : jekyllbootstrap
 
 future:      true
 lsi:         false

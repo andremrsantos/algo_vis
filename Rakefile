@@ -3,7 +3,7 @@ require 'rake'
 require 'yaml'
 require 'time'
 
-SOURCE = "."
+SOURCE = "./_source"
 CONFIG = {
   'layouts' => File.join(SOURCE, "_layouts"),
   'posts' => File.join(SOURCE, "_posts"),

@@ -6,7 +6,7 @@
 	<meta name="author" content="{{ site.author.name }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     
-	<title>ALGO - {{ page.title }}</title>
+	<title>Algo -> {{ page.title }}</title>
 
 	{% javascript app %}
 	{% stylesheet app %}
@@ -18,19 +18,21 @@
 <body>
 <div class="wrapper">
       <header>
-        <h1 class="header"><a href="{{ HOME_PATH }}">{{ site.title }}</a></h1>
+        <h1 class="header"><a href="/index.html">{{ site.title }}</a></h1>
         <p class="header">{{ site.tagline }}</p>
         <ul>
-          {% assign pages_list = site.pages %}
-          {% assign group = 'navigation' %}
+          {% assign pages_list=site.pages %}
+          {% assign group='navigation' %}
+          {% include pages_list.html %}
         </ul>
         
         {% if site.author %}
         <div class="misc vcard">
-          <h4>about</h4>
+          <img src="{{ site.author.email | gravatar_url: 120 }}" class='gravatar'/>
+          <h4><span class="author fn n">{{ site.author.name }}</span></h4>
           <ul>
             {% if site.author.email %}
-            <li class="contact"><address><span class="author fn n">{{ site.author.name }}</span> - <span class="fn email">{{ site.author.email }}</span></address></li>
+            <li class="contact"><address><a href="mailto:{{ site.author.email }}" class="fn email" >{{ site.author.email }}</a></address></li>
             {% endif %}
             {% if site.author.github %}
             <li class="github"><a href="http://github.com/{{ site.author.github }}/" rel="me">github.com/{{ site.author.github }}</a></li>
@@ -48,7 +50,7 @@
       </section>
 
       <footer>
-      <p><small>Desenvolvido por: André M. Ribeiro-dos-Santos</small></p>
+      <p><small>Desenvolvido por André M. Ribeiro-dos-Santos</small></p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
