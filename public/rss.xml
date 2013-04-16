@@ -5,10 +5,23 @@
         <description>Algo Class - André M. Ribeiro dos Santos</description>
         <link></link>
         <link></link>
-        <lastBuildDate>2013-04-16T16:09:36-03:00</lastBuildDate>
-        <pubDate>2013-04-16T16:09:36-03:00</pubDate>
+        <lastBuildDate>2013-04-16T16:58:27-03:00</lastBuildDate>
+        <pubDate>2013-04-16T16:58:27-03:00</pubDate>
         <ttl>1800</ttl>
 
+
+        <item>
+                <title>JSNetworkX test</title>
+                <description>&lt;script src=&#39;/assets/vendor/d3-d6c6d776da03ff33be8273e4d9b7a0b9.min&#39; type=&#39;text/javascript&#39; /&gt;&lt;script src=&#39;/assets/vendor/jsnetworkx-4670c31ba9b93f6605cd0f67ae524fdd.js&#39; type=&#39;text/javascript&#39; /&gt;&lt;script type=&#39;text/javascript&#39;&gt;
+    $(function() {
+        $(&#39;#canvas&#39;).click(function() { alert(&#39;ola&#39;); });
+
+    });
+&lt;/script&gt;&lt;div id=&#39;canvas&#39; /&gt;</description>
+                <link>/Graph/2013/04/16/jsnetworkx-test.html</link>
+                <guid>/Graph/2013/04/16/jsnetworkx-test</guid>
+                <pubDate>2013-04-16T00:00:00-03:00</pubDate>
+        </item>
 
 
 </channel>
