@@ -1,4 +1,4 @@
 require 'sass'
-require 'uglifier'
+require 'yui/compressor'
 require 'coffee-script'
 require 'jekyll-assets'

@@ -1,17 +1,27 @@
 ---
 layout: post
-title: "JSNetworkX test"
+title:  "JSNetworkX test"
 description: ""
 category: Graph 
-tags: [graph, api, jsnetworkx]
+tags:   [graph, api, jsnetworkx]
 styles: [canvas/canvas]
+js:     [vendor/d3.min, vendor/jsnetworkx]
 ---
-{% javascript vendor/d3.min %}
-{% javascript vendor/jsnetworkx %}
 <script type="text/javascript">
     $(function() {
-        $('#canvas').click(function() { alert('ola'); });
-
+        var G = jsnx.binomial_graph(6, 0.3);
+        G.node[0].label = 'lol';
+         
+        jsnx.draw(G, {
+            element: '#canvas',
+            with_labels: true ,
+            edge_style: {
+                'stroke-width': 10
+            },
+            node_style: {
+                stroke: 'none'
+            }
+        }, true);
     });
 </script>
 <div id="canvas"/>
