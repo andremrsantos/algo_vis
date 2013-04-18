@@ -17,6 +17,12 @@
     {% endfor %}
   {% endif %}
 
+  {% if page.js != null %}
+    {% for j in page.js %}
+      {{ j | javascript }}
+    {% endfor %}
+  {% endif %}
+
 	<!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->

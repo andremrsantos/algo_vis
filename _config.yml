@@ -36,7 +36,7 @@ maruku:
   png_dir:    images/latex
   png_url:    /images/latex
 
-assets:
-  compress:
-    css:  sass
-    js:   uglifier
+# assets:
+#   compress:
+#     css:  yui
+#     js:   yui

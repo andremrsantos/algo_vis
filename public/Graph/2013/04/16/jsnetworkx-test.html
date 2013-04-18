@@ -8,12 +8,20 @@
     
 	<title>Algo -> JSNetworkX test</title>
 
-	<script type="text/javascript" src="/assets/app-21c6440461580d2f803898ee0be18d02.js"></script>
-	<link rel="stylesheet" type="text/css" href="/assets/app-53970e526c476bd7728205e0b9d9b320.css">
+	<script type="text/javascript" src="/assets/app-ceaa5d2fccce695ed9438ad60c07a6f0.js"></script>
+	<link rel="stylesheet" type="text/css" href="/assets/app-70dfb34d97a08d3ccefbc54b2fbc5e02.css">
 
   
     
-      <link rel="stylesheet" type="text/css" href="/assets/canvas/canvas-869a721a8a456532baebd0941da1f291.css">
+      <link rel="stylesheet" type="text/css" href="/assets/canvas/canvas-6f91b169a5c3dc39626824423cf23ed9.css">
+    
+  
+
+  
+    
+      <script type="text/javascript" src="/assets/vendor/d3-e6adc5344c384c16f9c4d78f09cc6bb2.min"></script>
+    
+      <script type="text/javascript" src="/assets/vendor/jsnetworkx-c439e328db9911b52660c2424ca048ce.js"></script>
     
   
 
@@ -105,10 +113,21 @@
       <section>
   <h1>JSNetworkX test</h1>
 
-  <script src='/assets/vendor/d3-d6c6d776da03ff33be8273e4d9b7a0b9.min' type='text/javascript' /><script src='/assets/vendor/jsnetworkx-4670c31ba9b93f6605cd0f67ae524fdd.js' type='text/javascript' /><script type='text/javascript'>
+  <script type='text/javascript'>
     $(function() {
-        $('#canvas').click(function() { alert('ola'); });
-
+        var G = jsnx.binomial_graph(6, 0.3);
+        G.node[0].label = 'lol';
+         
+        jsnx.draw(G, {
+            element: '#canvas',
+            with_labels: true ,
+            edge_style: {
+                'stroke-width': 10
+            },
+            node_style: {
+                stroke: 'none'
+            }
+        }, true);
     });
 </script><div id='canvas' />
 
