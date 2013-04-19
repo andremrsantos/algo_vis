@@ -35,11 +35,19 @@ module DataStructure
         sink
 
         @key_position[min] = nil
-        @keys[min]. = null
+        @keys.delete_at(min)
+      end
+
+      def change_key(index, key)
+        throw Heap::NoSuchElementError index unless contains?(index)
+
+        @keys[index] = key
+        sink(index)
+        swim(index)
       end
 
       def contains?(index)
-        ! get(index).nil?
+        !get(index).nil?
       end
 
       def get(index)
@@ -65,15 +73,15 @@ module DataStructure
       end
 
       def swim(node=last)
-        while has_father(node) && compare(father(node),node)
+        while has_better_father?(node)
           father = father(node)
           exchange(node, father)
           node = father
         end
       end
 
-      def has_father(node)
-        node > 0
+      def has_better_father?(node)
+        node > 0 && compare(father(node),node)
       end
 
       def father(node)
@@ -134,5 +142,48 @@ module DataStructure
 
     end
 
+    class FibonacciHeap
+
+      def initialize(type=:min)
+        # Define the kind of Heap to be implemented: Min or Max
+        @comparator = Heap::COMPARATOR[type] || Heap::COMPARATOR[:min]
+
+        @roots = []
+        @top = nil
+        @keys = []
+        @size = 0
+      end
+
+      def insert(index, key)
+        throw Heap::IndexTakenError index if contains?(index)
+
+        @roots << index
+        @top = index if compare(key, @keys[top])
+        @keys[index] = key
+      end
+
+      def head
+        @keys[@top]
+      end
+
+      def remove
+
+      end
+
+      def change_key
+
+      end
+
+      def contains?(index)
+        !@keys[index].nil?
+      end
+
+      protected
+
+      def new_node(index)
+        Struct.new(index: index, sons: [], father: nil)
+      end
+
+    end
 	end
 end

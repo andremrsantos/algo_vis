@@ -22,10 +22,6 @@ module DataStructure
       #     checks the key in the top of the heap
       #   - remove:
       #     checks and remove the key in the top
-      #   - decresce_key(index, key):
-      #     decreases the key for a node identified by index
-      #   - increase_key(index, key):
-      #     increases the key for a node identified by index
       #   - change_key(index, key):
       #     alter the key for a node identified by index
       #   - merge(heap):
@@ -44,8 +40,14 @@ module DataStructure
     end
 
     class IndexTakenError < ArgumentError
-      def initialize(index)
+      def initialize(index='')
         super "The index ##{index} is already taken"
+      end
+    end
+
+    class NoSuchElementError < IndexError
+      def initialize(index='index')
+        super "There is no element in the ##{index}"
       end
     end
 
