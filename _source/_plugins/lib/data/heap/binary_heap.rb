@@ -16,7 +16,7 @@ module DataStructure
       end
 
       def insert(index, key)
-        throw Heap::IndexTakenError index if contains?(index)
+        throw DataStructure::IndexTakenError index if contains?(index)
 
         @key_position[index] = size
         @queue[size] = index
@@ -39,7 +39,7 @@ module DataStructure
       end
 
       def change_key(index, key)
-        throw Heap::NoSuchElementError index unless contains?(index)
+        throw DataStructure::NoSuchElementError index unless contains?(index)
 
         @keys[index] = key
         sink(index)
@@ -142,48 +142,5 @@ module DataStructure
 
     end
 
-    class FibonacciHeap
-
-      def initialize(type=:min)
-        # Define the kind of Heap to be implemented: Min or Max
-        @comparator = Heap::COMPARATOR[type] || Heap::COMPARATOR[:min]
-
-        @roots = []
-        @top = nil
-        @keys = []
-        @size = 0
-      end
-
-      def insert(index, key)
-        throw Heap::IndexTakenError index if contains?(index)
-
-        @roots << index
-        @top = index if compare(key, @keys[top])
-        @keys[index] = key
-      end
-
-      def head
-        @keys[@top]
-      end
-
-      def remove
-
-      end
-
-      def change_key
-
-      end
-
-      def contains?(index)
-        !@keys[index].nil?
-      end
-
-      protected
-
-      def new_node(index)
-        Struct.new(index: index, sons: [], father: nil)
-      end
-
-    end
 	end
 end
