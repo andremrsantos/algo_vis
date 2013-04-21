@@ -43,7 +43,6 @@ module DataStructure
 
       def pop
         # Remove do fim
-
         if size == 1
           clear
         else
@@ -60,27 +59,8 @@ module DataStructure
 
       end
 
-      def contains?(key)
-        current = @start
-        until current.nil?
-          return true if current.key == key
-          current = current.next
-        end
-        return false
-      end
-
-      def get(index)
-        throw DataStructure::NoSuchElementError index if index >= size
-
-        idx = 0
-        current = @start
-
-        while idx < index
-          current = current.next
-          idx += 1
-        end
-
-        current.key
+      def concat(list)
+        @end.next = list.start_node
       end
 
       protected

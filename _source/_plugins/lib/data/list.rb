@@ -2,15 +2,20 @@ module DataStructure
   module List
 
     class ListBase
+      include Enumerable
+
       attr_reader :size
 
-      alias_method :add, :append
-      alias_method :remove, :shift
-
-      alias_method :peek, :first
-
-      def initialize
+      def initialize(type)
         throw NotImplementedError 'Abstract class, please use an child'
+      end
+
+      def append(key)
+        throw NotImplementedError 'This method must be implemented'
+      end
+
+      def shift
+        throw NotImplementedError 'This method must be implemented'
       end
 
       def clear
@@ -24,17 +29,65 @@ module DataStructure
       end
 
       def first
-        @start.nil? ? nil : @start.key
+        start_node.nil? ? nil : start_node.key
       end
 
       def last
-        @end.nil? ? nil : @end.key
+        end_node.nil? ? nil : start_node.key
       end
+
+      def each
+        unless empty?
+          current = @start
+          until current.nil?
+            yield current.key
+            current = current.next
+          end
+        end
+        self
+      end
+
+      def contains?(key)
+        current = @start
+        until current.nil?
+          return true if current.key == key
+          current = current.next
+        end
+        false
+      end
+
+      def get(index)
+        throw DataStructure::NoSuchElementError index if index >= size
+
+        idx = 0
+        current = @start
+
+        while idx < index
+          current = current.next
+          idx += 1
+        end
+
+        current.key
+      end
+
+      alias_method :add, :append
+      alias_method :remove, :shift
+
+      alias_method :peek, :first
 
       protected
 
       SingleLinkNode = Struct.new(:key, :next)
       DoubleLinkNode = Struct.new(:key, :next, :last)
+
+      def start_node
+        @start
+      end
+
+      def end_node
+        @end
+      end
+
       # Must implement the following operations:
       # - add
       # - remove

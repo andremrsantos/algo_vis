@@ -41,5 +41,6 @@ module DataStructure
 
   end
 
-  require 'data/heap/binaryheap'
+  require 'data/heap/binary_heap'
+  require 'data/heap/fibonacci_heap'
 end

@@ -57,19 +57,15 @@ module DataStructure
         end
       end
 
-      def contains?(key)
-        current = @start
-        until current.nil?
-          return true if current.key == key
-          current = current.next
-        end
-        false
-      end
-
       def get(index)
         throw DataStructure::NoSuchElementError index if index >= size
 
         (index > size/2)? back_look(index) : foward_look(index)
+      end
+
+      def concat(list)
+        @end.next = list.start_node
+        list.start.last = @end
       end
 
       protected

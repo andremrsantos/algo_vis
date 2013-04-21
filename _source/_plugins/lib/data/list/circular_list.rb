@@ -4,15 +4,8 @@ module DataStructure
   module List
 
     class CircularList < ListBase
-      alias_method :unshift, :append
-      alias_methos :pop, :shift
-
       def initialize
         clear
-      end
-
-      def last
-        @start.nil? ? nil : @start.last.key
       end
 
       def shift_right
@@ -27,9 +20,9 @@ module DataStructure
         if empty?
           init(key)
         else
-          node = DoubleLinkNode.new(key, @start, @start.last)
-          @start.last.next = node
-          @start.last = node
+          node = DoubleLinkNode.new(key, start_node, end_node)
+          end_node.next   = node
+          start_node.last = node
         end
         @size += 1
       end
@@ -39,32 +32,36 @@ module DataStructure
           clear
         else
           size -= 1
-          tmp = @start
-          @start.last.next = tmp.next
-          @start.next.last = tmp.last
+          tmp = start_node
+          end_node.next = tmp.next
+          start_node.next.last = tmp.last
           tmp.key
         end
       end
 
       def contains?(key)
-        current = @start
-        until current.nil?
+        current = start_node
+        begin
           return true if current.key == key
           current = current.next
-        end
+        end until current == start_node
         false
       end
 
-      def get(index)
-        throw DataStructure::NoSuchElementError index if index >= size
-
-        idx = 0
-        current = @start
-
-        until idx > index
-          current = current.next
-          idx += 1
+      def each
+        unless empty?
+          current = start_node
+          begin
+            yield current.key
+            current = current.next
+          end until current == start_node
         end
+        self
+      end
+
+      def concat(*items)
+        items.each {|item| concat_item(item)}
+        self
       end
 
       protected
@@ -77,6 +74,34 @@ module DataStructure
         @start = node
       end
 
+      def concat_item(item)
+
+        case item
+        when DoubleLinkNode || CircularList
+          l_start = item.start_node
+          l_end   = item.end_node
+
+          l_start.last = end_node
+          l_end.next   = start_node
+
+          end_node.next   = l_start
+          start_node.last = l_end
+        when Enumerable
+          item.each {|i| append(i)}
+        when Comparable
+          append(item)
+        else
+          throw ArgumentError "List is not compatible"
+        end
+
+      end
+
+      def end
+        @start.last
+      end
+
+      alias_method :unshift, :append
+      alias_method :pop, :shift
     end
 
   end
