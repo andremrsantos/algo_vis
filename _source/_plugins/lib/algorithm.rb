@@ -1,2 +1,4 @@
-module Algorithm
-end
+module Algorithm; end
+
+require 'algorithm/sort'
+require 'algorithm/graph'

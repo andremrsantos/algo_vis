@@ -1,11 +1,12 @@
 module DataStructure
   module Heap
+
     COMPARATOR = {
-        min: -> (x,y) { x < y },
-        max: -> (x,y) { x > y }
+        min: -> (x, y) { x < y },
+        max: -> (x, y) { x > y }
     }
 
-		class HeapBase
+    class HeapBase
       attr_reader :size
 
       def initialize
@@ -33,14 +34,14 @@ module DataStructure
 
       protected
 
-      def compare(x,y)
-        @comparator.call(x,y)
+      def compare(x, y)
+        @comparator.call(x, y)
       end
 
     end
-
   end
-
-  require 'data/heap/binary_heap'
-  require 'data/heap/fibonacci_heap'
 end
+
+
+require 'data/heap/binary_heap'
+require 'data/heap/fibonacci_heap'
