@@ -12,6 +12,8 @@ module DataStructure
     end
   end
 
-  require 'data/heap'
-
 end
+
+require 'data/heap'
+require 'data/list'
+require 'data/graph'

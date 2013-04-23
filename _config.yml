@@ -6,7 +6,7 @@ source:      ./_source
 destination: ./public
 plugins:     ./_source/_plugins
 
-title : Algo Class
+title : Algorithm Class
 tagline: learning and visualizing algorithms
 author :
   name : André M. Ribeiro dos Santos
