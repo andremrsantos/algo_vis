@@ -9,7 +9,7 @@ module DataStructure::List
       if empty?
         start_list(key)
       else
-        node   = SingleLinkNode.new(key, @start)
+        node = SingleLinkNode.new(key, @start)
         @start = node
       end
       @size += 1
@@ -20,7 +20,7 @@ module DataStructure::List
         start_list(key)
       else
         @end.next = SingleLinkNode.new(key, nil)
-        @end      = @end.next
+        @end = @end.next
       end
       @size += 1
     end
@@ -30,8 +30,8 @@ module DataStructure::List
       if size == 1
         clear
       else
-        @size  -= 1
-        tmp    = @start
+        @size -= 1
+        tmp = @start
         @start = @start.next
         tmp.key
       end
@@ -42,13 +42,13 @@ module DataStructure::List
       if size == 1
         clear
       else
-        @size  -= 1
+        @size -= 1
         father = @start
         while father.next.next != nil
           father = father.next
         end
-        @end        = father
-        tmp         = father.next
+        @end = father
+        tmp = father.next
         father.next = nil
         tmp.key
       end
@@ -63,7 +63,7 @@ module DataStructure::List
 
     def start_list(key)
       @start = SingleLinkNode.new(key, nil)
-      @end   = @start
+      @end = @start
     end
 
   end

@@ -9,9 +9,9 @@ module DataStructure::List
       if empty?
         init(key)
       else
-        node        = DoubleLinkNode(key, @start, nil)
+        node = DoubleLinkNode(key, @start, nil)
         @start.last = node
-        @start      = node
+        @start = node
       end
       @size += 1
     end
@@ -20,9 +20,9 @@ module DataStructure::List
       if empty?
         init(key)
       else
-        node      = DoubleLinkNode(key, nil, @end)
+        node = DoubleLinkNode(key, nil, @end)
         @end.next = node
-        @end      = node
+        @end = node
       end
       @size += 1
     end
@@ -33,9 +33,9 @@ module DataStructure::List
       else
         @size -=1
 
-        tmp           = @start
+        tmp = @start
         tmp.next.last = nil
-        @start        = tmp.next
+        @start = tmp.next
         tmp.key
       end
     end
@@ -46,9 +46,9 @@ module DataStructure::List
       else
         @size -=1
 
-        tmp           = @end
+        tmp = @end
         tmp.last.next = nil
-        @end          = tmp.last
+        @end = tmp.last
         tmp.key
       end
     end
@@ -60,7 +60,7 @@ module DataStructure::List
     end
 
     def concat(list)
-      @end.next       = list.start_node
+      @end.next = list.start_node
       list.start.last = @end
     end
 
@@ -68,26 +68,26 @@ module DataStructure::List
 
     def init(key)
       @start = DoubleLinkNode.new(key, nil, nil)
-      @end   = @start
+      @end = @start
     end
 
     def back_look(index)
-      idx     = 0
+      idx = 0
       current = @start
       while idx < index
         current = current.next
-        idx     += 1
+        idx += 1
       end
 
       current.key
     end
 
     def foward_look(index)
-      idx     = size - 1
+      idx = size - 1
       current = @end
       while idx > index
         current = current.last
-        idx     -= 1
+        idx -= 1
       end
 
       current.key

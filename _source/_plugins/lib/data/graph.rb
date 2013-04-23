@@ -24,7 +24,7 @@ module DataStructure
       attr_reader :order, :size
 
       def initialize
-        raise NotImplementedError 'You must use one of the children'
+        QueueGraph.new
       end
 
       # This class children must implement the following methods:
@@ -72,9 +72,13 @@ module DataStructure
           return false if degree(node) != degree
         end
 
-        return true
+        true
       end
 
+    end
+
+    module Digraph
+      ;
     end
 
     def self.load(lines, kind = QueueGraph)
@@ -83,7 +87,7 @@ module DataStructure
       graph = kind.new
 
       lines.each_with_index do |line, node|
-        items = line.chomp.split(/[, ;]/)
+        items = line.chomp.gsub(/\s/, '').split(/[,;]/)
         items.each do |other|
           v = node.to_i
           w = other.to_i
@@ -102,8 +106,8 @@ module DataStructure
       lines.each_with_index do |line, node|
         items = line.chomp.split(/[, ;]/)
         items.each do |other|
-          v      = node.to_i
-          w      = other.gsub(/:.+$/, '').to_i
+          v = node.to_i
+          w = other.gsub(/:.+$/, '').to_i
           weight = other.gsub(/^.+:/, '').to_f
           graph.add_edge(v, w, weight) unless graph.has_edge?(v, w, weight)
         end

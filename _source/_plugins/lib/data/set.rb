@@ -49,21 +49,23 @@ module DataStructure
       end
 
       def merge(other)
-        self.copy.merge!(other)
+        self.clone.merge!(other)
       end
 
       def merge!(other)
         other.each { |key| self.add(key) }
+        self
       end
 
       alias_method :+, :merge
 
       def subtract(other)
-        self.copy.subtract!(other)
+        self.clone.subtract!(other)
       end
 
       def subtract!(other)
         other.each { |key| delete(key) }
+        self
       end
 
       alias_method :-, :subtract

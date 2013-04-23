@@ -8,8 +8,8 @@ module Algorithm::Sort
     comparator ||= ASC
 
     mid = arr.size/2
-    left = arr[0,mid]
-    right = arr[mid,arr.size]
+    left = arr[0, mid]
+    right = arr[mid, arr.size]
     merge(merge_sort(left, &comparator),
           merge_sort(right, &comparator),
           &comparator)

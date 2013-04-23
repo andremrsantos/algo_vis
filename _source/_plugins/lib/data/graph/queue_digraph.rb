@@ -1,6 +1,7 @@
 module DataStructure::Graph
 
   class QueueDigraph < QueueGraph
+    include Digraph
 
     def add_edge(node_v, node_w)
       raise ArgumentError 'Node already included' if has_edge?(node_v, node_w)
@@ -31,7 +32,7 @@ module DataStructure::Graph
     alias_method :outdegree, :degree
 
     def transpose
-      graph = QueueDigraph.new
+      graph = QueueDigraph.new(order)
 
       each_edge { |edge| graph.add_edge(edge.to, edge.from) }
 
@@ -41,7 +42,7 @@ module DataStructure::Graph
     class DirectedEdge < Edge
 
       def initialize(node, other, weight = 1)
-        @node  = node
+        @node = node
         @other = other
         @weight= weight
       end

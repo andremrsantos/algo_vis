@@ -4,11 +4,11 @@ module DataStructure::Heap
 
     def initialize(type = :min)
       # Define the kind of Heap to be implemented: Min or Max
-      @comparator   = Heap::COMPARATOR[type] || Heap::COMPARATOR[:min]
+      @comparator = Heap::COMPARATOR[type] || Heap::COMPARATOR[:min]
 
       # Define working variables
-      @queue        = []
-      @keys         = []
+      @queue = []
+      @keys = []
       @key_position = []
     end
 
@@ -16,8 +16,8 @@ module DataStructure::Heap
       throw DataStructure::IndexTakenError index if contains?(index)
 
       @key_position[index] = size
-      @queue[size]         = index
-      @keys[index]         = key
+      @queue[size] = index
+      @keys[index] = key
       swim
     end
 
@@ -111,12 +111,12 @@ module DataStructure::Heap
 
     def exchange(from, to)
       # Update Priority Queue
-      tmp                         = @queue[from]
-      @queue[from]                = @queue[to]
-      @queue[to]                  = tmp
+      tmp = @queue[from]
+      @queue[from] = @queue[to]
+      @queue[to] = tmp
       # Update Key reference
       @key_position[@queue[from]] = from
-      @key_position[@queue[to]]   = to
+      @key_position[@queue[to]] = to
     end
 
     def compare(x, y)
@@ -131,7 +131,7 @@ module DataStructure::Heap
       return '' if node >= size
 
       son_a, son_b = sons(node)
-      str          = '| '*lvl
+      str = '| '*lvl
       str << "\\_#{key_at(node)}\n"
       str << node_to_s(son_a, lvl+1)
       str << node_to_s(son_b, lvl+1)

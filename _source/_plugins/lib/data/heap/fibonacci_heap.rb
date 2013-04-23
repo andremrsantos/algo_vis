@@ -120,7 +120,7 @@ module DataStructure::Heap
       roots = []
       @next.each_sibling { |node| roots << node }
 
-      top     = @next
+      top = @next
       degrees = []
 
       roots.each do |root|
@@ -132,7 +132,7 @@ module DataStructure::Heap
           degrees[degree] = root
         else
           until degrees[degree].nil?
-            other           = degrees[degree]
+            other = degrees[degree]
             smaller, larger = if compare(other.value, root.value)
                                 [root, other]
                               else
@@ -140,8 +140,8 @@ module DataStructure::Heap
                               end
             larger.add(smaller)
             degrees[degree] = nil
-            root            = larger
-            degree          += 1
+            root = larger
+            degree += 1
           end
           degrees[degree] = root
           # min = root if min.value == root.value
@@ -156,7 +156,7 @@ module DataStructure::Heap
       node = @keys[key]
 
       node.value = new_value
-      parent     = node.parent
+      parent = node.parent
 
       unless parent.nil? && compare(new_value, parent.value)
         cut(node)
@@ -169,7 +169,7 @@ module DataStructure::Heap
     end
 
     def cut(node)
-      parent        = node.parent
+      parent = node.parent
       parent.degree -= 1
 
       if parent.degree == 0
@@ -197,10 +197,10 @@ module DataStructure::Heap
     end
 
     def sink(key, new_value)
-      removed        = @keys[key]
+      removed = @keys[key]
       removed.parent = nil
       removed.degree = 0
-      removed.value  = new_value
+      removed.value = new_value
 
       # clear father
       removed.each_child { |node| node.parent = nil } if removed.has_child?
@@ -218,12 +218,12 @@ module DataStructure::Heap
                     :key, :value, :degree, :marked
 
       def initialize(key, value)
-        self.key    = key
-        self.value  = value
+        self.key = key
+        self.value = value
         self.degree = 0
         self.marked = false
-        self.right  = self
-        self.left   = self
+        self.right = self
+        self.left = self
       end
 
       def add(node)
@@ -246,7 +246,7 @@ module DataStructure::Heap
         self.right.left = node.left
         node.left.right = self.right
 
-        node.left  = self
+        node.left = self
         self.right = node
       end
 
@@ -256,7 +256,7 @@ module DataStructure::Heap
         right.left = left
 
         # Make it self linked
-        self.left  = self.right = self
+        self.left = self.right = self
       end
 
       def has_child?

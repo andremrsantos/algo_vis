@@ -17,8 +17,8 @@ module DataStructure::List
       if empty?
         init(key)
       else
-        node            = DoubleLinkNode.new(key, start_node, end_node)
-        end_node.next   = node
+        node = DoubleLinkNode.new(key, start_node, end_node)
+        end_node.next = node
         start_node.last = node
       end
       @size += 1
@@ -28,9 +28,9 @@ module DataStructure::List
       if size == 0
         clear
       else
-        size                 -= 1
-        tmp                  = start_node
-        end_node.next        = tmp.next
+        size -= 1
+        tmp = start_node
+        end_node.next = tmp.next
         start_node.next.last = tmp.last
         tmp.key
       end
@@ -64,7 +64,7 @@ module DataStructure::List
     protected
 
     def init(key)
-      node      = DoubleLinkNode.new(key, nil, nil)
+      node = DoubleLinkNode.new(key, nil, nil)
       node.last = node
       node.next = node
 
@@ -76,12 +76,12 @@ module DataStructure::List
       case item
       when DoubleLinkNode || CircularList
         l_start = item.start_node
-        l_end   = item.end_node
+        l_end = item.end_node
 
         l_start.last = end_node
-        l_end.next   = start_node
+        l_end.next = start_node
 
-        end_node.next   = l_start
+        end_node.next = l_start
         start_node.last = l_end
       when Enumerable
         item.each { |i| append(i) }

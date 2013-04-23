@@ -1,7 +1,7 @@
 module Algorithm
   module Sort
-    ASC = lambda {|a,b| a <= b }
-    DSC = lambda {|a,b| b >= a }
+    ASC = lambda { |a, b| a <= b }
+    DSC = lambda { |a, b| b >= a }
 
     private
 

@@ -1,9 +1,8 @@
 require 'matrix'
-require 'data/graph'
 
 module DataStructure::Graph
 
-  class MatrixGraph < Graph
+  class MatrixGraph < GraphBase
 
     def initialize(vertices = 0)
       @adjacency = Matrix.zero(vertices)

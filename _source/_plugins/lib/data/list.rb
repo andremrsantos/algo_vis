@@ -20,8 +20,8 @@ module DataStructure
 
       def clear
         @start = nil
-        @end   = nil
-        @size  = 0
+        @end = nil
+        @size = 0
       end
 
       def empty?
@@ -59,12 +59,12 @@ module DataStructure
       def get(index)
         throw DataStructure::NoSuchElementError index if index >= size
 
-        idx     = 0
+        idx = 0
         current = @start
 
         while idx < index
           current = current.next
-          idx     += 1
+          idx += 1
         end
 
         current.key

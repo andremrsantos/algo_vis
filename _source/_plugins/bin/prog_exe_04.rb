@@ -8,7 +8,7 @@ DATA_DIR = File.dirname(__FILE__) + '/data/'
 
 def q01
   puts 'loading data vector...'
-  vector = File.open(DATA_DIR + 'VetorInteiros.txt').collect {|line| line.to_i}
+  vector = File.open(DATA_DIR + 'VetorInteiros.txt').collect { |line| line.to_i }
 
   puts 'Sorting...'
   if SummaryLogger.has? :order_inversion

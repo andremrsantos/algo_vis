@@ -6,8 +6,9 @@ module DataStructure::Graph
 
     def initialize(order = 0)
       @order = 0
-      @size  = 0
+      @size = 0
       @nodes = {} # Integer identified nodes
+      init(order)
     end
 
     def add_edge(node_v, node_w)
@@ -59,11 +60,13 @@ module DataStructure::Graph
     end
 
     def transpose
-      self
+      self.clone
     end
 
     def edges
-      @nodes.inject(DataStructure::Set::Set.new) { |edges, adj| edges.merge!(adj.last) }.items
+      @nodes.inject(DataStructure::Set::Set.new) do |edges, adj|
+        edges.merge!(adj.last)
+      end.items
     end
 
     def nodes
@@ -81,14 +84,21 @@ module DataStructure::Graph
     def to_s
       str = " < #{self.class} > \n"
       str << "V: %03d\nE: %03d\n" % [order, size]
-      @nodes.inject(str) {|sum, pair| sum << "#{pair.last.to_s}\n"}
+      @nodes.inject(str) { |sum, pair| sum << "#{pair.last.to_s}\n" }
     end
 
     protected
 
     def get_or_add_node(index)
-      @order        += 1
-      @nodes[index] ||= DataStructure::Set::Set.new
+      unless @nodes[index]
+        @order += 1
+        @nodes[index] = DataStructure::Set::Set.new
+      end
+      @nodes[index]
+    end
+
+    def init(order)
+      order.times { |i| add_node(i) }
     end
 
     class Edge
