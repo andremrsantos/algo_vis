@@ -40,8 +40,8 @@ puts 'c)'
 puts Algorithm::Graph::has_cycle?(graph01)
 
 puts 'd)'
-puts 'Distance to every node from Node 0'
-puts Algorithm::Graph::min_path_from(0, graph01)
+puts 'Distance to 9 from Node 0'
+puts Algorithm::Graph::min_path(0, 9, graph01).inspect
 
 # 2nd Question
 h_line
@@ -63,8 +63,15 @@ h_line
 question_header(03)
 
 visit = Algorithm::Graph::topological_sort(graph02)
+matrix = graph02.adjacent_matrix(graph02.nodes).collect do |line|
+          '|' + line.collect {|el| '%2s' % (el or 0) }.join(' ') + '|'
+end.join("\n")
+puts matrix
+
+h_line
+
 matrix = graph02.adjacent_matrix(visit).collect do |line|
-          '|' + line.collect {|el| '%2s' % (el or '-') }.join(' ') + '|'
+          '|' + line.collect {|el| '%2s' % (el or 0) }.join(' ') + '|'
 end.join("\n")
 puts matrix
 

@@ -10,8 +10,15 @@ module Algorithm::Graph
     BreadFirstSearch.new(graph, order).search
   end
 
-  def self.min_path_from(node, graph)
-    bread_first_search(graph, [node].concat(graph.nodes))
+  def self.min_path(from, to,  graph)
+    search = bread_first_search(graph, [from].concat(graph.nodes))
+    path = [to]
+    node = search.get(to)[:parent]
+    until node.nil?
+      path.unshift node
+      node = search.get(node)[:parent]
+    end
+    path
   end
 
   class SearchBase
