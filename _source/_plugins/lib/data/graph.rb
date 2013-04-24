@@ -75,44 +75,68 @@ module DataStructure
         true
       end
 
+      def euler?
+        each_node do |node|
+          return false unless degree(node) % 2 == 0
+        end
+        return true
+      end
+
+      def adjacent_matrix(visit_order = graph.nodes)
+        matrix = []
+        for i in 0...order
+          matrix[i] = []
+
+          adjacent(visit_order[i]).each do |edge|
+            other = visit_order.index( edge.other(visit_order[i]) )
+            matrix[i][other] = edge.weight
+          end
+
+          matrix[i][order] = visit_order[i]
+        end
+        matrix[order] = visit_order
+        matrix
+      end
+
     end
 
     module Digraph
-      ;
+
+      def euler?
+        each_node do |node|
+          return false unless indegree(node) == outdegree(node)
+        end
+        return true
+      end
+
     end
 
     def self.load(lines, kind = QueueGraph)
       lines = lines.split("\n") if lines.kind_of? String
 
-      graph = kind.new
+      order = lines.shift.chomp.to_i
+      graph = kind.new(order)
 
-      lines.each_with_index do |line, node|
-        items = line.chomp.gsub(/\s/, '').split(/[,;]/)
-        items.each do |other|
-          v = node.to_i
-          w = other.to_i
-          graph.add_edge(v, w) unless graph.has_edge?(v, w)
-        end
+      lines.each do |edge|
+        node_v, node_w = edge.chomp.split(/[ ,;\t]/)
+        graph.add_edge(node_v.to_i, node_w.to_i)
       end
 
       graph
     end
 
-    def self.load_with_weight(lines, kind = WeightedQueueDigraph)
+    def self.load_weighted(lines, kind = WeightedQueueDigraph)
       lines = lines.split("\n") if lines.kind_of? String
 
+      order = lines.shift.chomp.to_i
       graph = kind.new
 
-      lines.each_with_index do |line, node|
-        items = line.chomp.split(/[, ;]/)
-        items.each do |other|
-          v = node.to_i
-          w = other.gsub(/:.+$/, '').to_i
-          weight = other.gsub(/^.+:/, '').to_f
-          graph.add_edge(v, w, weight) unless graph.has_edge?(v, w, weight)
-        end
+      lines.each do |edge|
+        node_v, node_w, weight = edge.chomp.split(/[ ,;\t]/)
+        graph.add_edge(node_v.to_i, node_w.to_i, weight.to_f)
       end
 
+      graph
     end
 
   end

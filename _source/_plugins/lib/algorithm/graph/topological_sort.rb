@@ -17,6 +17,7 @@ module Algorithm::Graph
 
     def sort
       @nodes = TopologicalDepthFirstSearch.new(graph).search.nodes
+      self
     end
 
     def to_s
@@ -27,8 +28,7 @@ module Algorithm::Graph
       attr_reader :nodes
 
       def visit(node)
-        raise CyclicGraphError if get(node)[:color] != :white
-
+        warn '[WARN]: Return edges are ignored' if get(node)[:color] == :grey
         super
       end
 

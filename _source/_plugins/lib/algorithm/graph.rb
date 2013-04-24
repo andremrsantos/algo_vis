@@ -13,3 +13,4 @@ end
 require 'algorithm/graph/search'
 require 'algorithm/graph/topological_sort'
 require 'algorithm/graph/connected'
+require 'algorithm/graph/cycle'

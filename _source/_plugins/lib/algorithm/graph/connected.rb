@@ -19,14 +19,10 @@ module Algorithm::Graph
     end
 
     def find
-      depth_first = Algorithm::Graph::depth_first_search(graph)
+      order = Algorithm::Graph::topological_sort(graph)
       graph_ = graph.transpose
 
-      nodes = graph.nodes.sort do |a, b|
-        -(depth_first.get(a)[:exit] <=> depth_first.get(b)[:exit])
-      end
-
-      @groups = ConnectedDepthFirstSearch.new(graph_).search(nodes).groups
+      @groups = GroupedDepthFirstSearch.new(graph_,order).search.groups
 
       self
     end
@@ -37,32 +33,35 @@ module Algorithm::Graph
       end
     end
 
-    class ConnectedDepthFirstSearch < DepthFirstSearch
+    class GroupedDepthFirstSearch < DepthFirstSearch
       attr_reader :groups
 
-      def search(order)
-        init color: :white, parent: nil
-
-        last = @time
-
-        order.each do |node|
-          if visit(node)
-            @groups << order.find_all do |node|
-              get(node)[:exit] and get(node)[:exit].between?(last, @time)
-            end
-            last = @time + 1
-          end
-        end
-
-        self
-      end
-
-      protected
+      private
 
       def init(hash = {})
         super
         @groups = []
+        @at  = 0
+        @min = @time + 1
       end
+
+      def visit(node)
+        if super
+          add_node(node)
+          next_group if get(node)[:entry] <= @min
+        end
+      end
+
+      def add_node(node)
+        @groups[@at] ||= []
+        @groups[@at].unshift node
+      end
+
+      def next_group
+        @min = @time + 1
+        @at += 1
+      end
+
     end
 
   end

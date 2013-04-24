@@ -22,16 +22,55 @@ h_line
 # 1st Question
 question_header(01)
 # loading graph
-graph = File.readlines(
-    File.dirname(__FILE__) +'/data/graph/lista03_graph01.txt')
-graph = DataStructure::Graph::load(graph, DataStructure::Graph::QueueDigraph)
+graph01 = File.readlines(
+    File.dirname(__FILE__) + '/data/graph/lista03_graph01.txt')
+graph01 = DataStructure::Graph::load(graph01, DataStructure::Graph::QueueDigraph)
 
-puts 'Graph G'
-puts graph
+puts 'Graph G 01'
+puts graph01
 h_line
 
 puts 'a)'
-puts Algorithm::Graph::depth_first_search(graph)
+puts Algorithm::Graph::depth_first_search(graph01)
 
 puts 'b)'
-puts Algorithm::Graph::strongly_connected(graph)
+puts Algorithm::Graph::strongly_connected(graph01)
+
+puts 'c)'
+puts Algorithm::Graph::has_cycle?(graph01)
+
+puts 'd)'
+puts 'Distance to every node from Node 0'
+puts Algorithm::Graph::min_path_from(0, graph01)
+
+# 2nd Question
+h_line
+question_header(02)
+# loading graph
+graph02 = File.readlines(
+    File.dirname(__FILE__) + '/data/graph/lista03_graph02.txt')
+graph02 = DataStructure::Graph::load(graph02,
+                                     DataStructure::Graph::QueueDigraph)
+
+puts 'Graph G 02'
+puts graph02
+h_line
+
+puts Algorithm::Graph::topological_sort(graph02).join(' - ')
+
+# 3rd Question
+h_line
+question_header(03)
+
+visit = Algorithm::Graph::topological_sort(graph02)
+matrix = graph02.adjacent_matrix(visit).collect do |line|
+          '|' + line.collect {|el| '%2s' % (el or '-') }.join(' ') + '|'
+end.join("\n")
+puts matrix
+
+# 4th Question
+h_line
+question_header(04)
+
+puts graph02.euler?
+
