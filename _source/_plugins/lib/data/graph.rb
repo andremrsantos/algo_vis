@@ -114,12 +114,19 @@ module DataStructure
     def self.load(lines, kind = QueueGraph)
       lines = lines.split("\n") if lines.kind_of? String
 
+      first = lines.shift
+      graph = case first.chomp
+              when /^\d+$/
+                kind.new(order)
+              when /^.+[, ;\t]$/
+              end
       order = lines.shift.chomp.to_i
       graph = kind.new(order)
 
       lines.each do |edge|
+        next if edge.empty? || edge =~ /^#/
         node_v, node_w = edge.chomp.split(/[ ,;\t]/)
-        graph.add_edge(node_v.to_i, node_w.to_i)
+        graph.add_edge(node_v, node_w)
       end
 
       graph
