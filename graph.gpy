@@ -1,0 +1,6 @@
+Digraph
+[a,b,c,d]
+{a, b}
+{b, c}
+{a, d}
+{d, c}

@@ -99,6 +99,6 @@ module DataStructure
   end
 end
 
-require 'list/circular_list'
-require 'list/double_linked_list'
-require 'list/single_linked_list'
+require 'data/list/circular_list'
+require 'data/list/double_linked_list'
+require 'data/list/single_linked_list'

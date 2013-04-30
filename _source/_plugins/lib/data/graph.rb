@@ -1,3 +1,5 @@
+require 'data'
+
 module DataStructure
 
   module Graph
@@ -20,7 +22,13 @@ module DataStructure
 
     class NodeTakenError < IndexTakenError; end
 
-    class EdgeTakenError < IndexTakenError; end
+    class EdgeTakenError < IndexTakenError
+
+      def initialize(from, to)
+        super "{#{from}, #{to}}"
+      end
+
+    end
   
   end
 
@@ -30,3 +38,4 @@ end
 require 'data/graph/queue_graph'
 require 'data/graph/graph'
 require 'data/graph/digraph'
+require 'data/graph/graph_parser'

@@ -2,13 +2,13 @@ module DataStructure
 
   class IndexTakenError < ArgumentError
     def initialize(index='')
-      super "The index ##{index} is already taken"
+      super "'#{index}' taken"
     end
   end
 
   class NoSuchElementError < IndexError
     def initialize(index='index')
-      super "There is no element in the ##{index}"
+      super "No such #{index}"
     end
   end
 

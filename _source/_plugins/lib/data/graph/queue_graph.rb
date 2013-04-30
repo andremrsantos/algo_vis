@@ -21,19 +21,23 @@ module DataStructure::Graph
     end
 
     def has_edge?(from,to)
-      ! adjacent(from).include?(to)
+      adjacent(from).include?(to)
     end
 
     def add_node(node)
-      raise NodeTakenError node if has_node?(node)
+      raise NodeTakenError, node if has_node?(node)
 
-      @nodes[node] = { out: 0, in: 0, attr: {}, edges: DataStructure::Set.new }
+      @nodes[node] = {
+          out: 0,
+          in: 0,
+          attr: {},
+          edges: DataStructure::Set::Set.new }
       @order += 1
       self
     end
 
     def remove_node(node)
-      raise NoSuchNodeError node unless has_node?(node)
+      raise NoSuchNodeError, node unless has_node?(node)
 
       @nodes.delete(node)
       pull_edges_to(node)
@@ -46,10 +50,7 @@ module DataStructure::Graph
     end
 
     def add_edge(from, to, weight = 1)
-      raise EdgeTakenError from, to if has_edge?(from, to)
-
-      add_node(from) unless has_node?(from)
-      add_node(to)   unless has_node?(to)
+      raise EdgeTakenError.new(from, to) if has_edge?(from, to)
 
       edge = Edge.new(from, to, weight)
 
@@ -61,7 +62,8 @@ module DataStructure::Graph
     alias_method :connect, :add_edge
 
     def remove_edge(from, to)
-      raise NoSuchEdgeError from, to unless has_edge?(from, to)
+      raise NoSuchEdgeError, from, to unless has_edge?(from, to)
+      raise NoSuchEdgeError, from, to unless has_edge?(from, to)
 
       edge = Edge.new(from, to)
 
@@ -81,7 +83,7 @@ module DataStructure::Graph
     end
 
     def nodes
-      @edges.keys
+      @nodes.keys
     end
 
     def each_node(&block)
@@ -90,8 +92,8 @@ module DataStructure::Graph
     alias_method :each, :each_node
 
     def edges
-      nodes.inject(DataStructure::Set.new) do |set, node|
-        set.merge! adjacent(node)
+      nodes.inject(DataStructure::Set::Set.new) do |set, node|
+        set.merge! adjacent_edges(node)
       end
     end
 
@@ -123,7 +125,7 @@ module DataStructure::Graph
     private
 
     def get_node(node)
-      raise NoSuchNodeError node unless has_node?(node)
+      raise NoSuchNodeError, node unless has_node?(node)
 
       @nodes[node]
     end
@@ -174,7 +176,7 @@ module DataStructure::Graph
     end
 
     def other(node)
-      raise ArgumentError, 'Node not found' unless nodes.include? node
+      raise NoSuchNodeError, node unless nodes.include? node
 
       node == @node ? @other : @node
     end
@@ -200,7 +202,7 @@ module DataStructure::Graph
     end
 
     def to_s
-      '{%s,%s:%03.2f}' % [@node, @other, @weight]
+      '{%s, %s : %03.2f}' % [@node, @other, @weight]
     end
 
   end

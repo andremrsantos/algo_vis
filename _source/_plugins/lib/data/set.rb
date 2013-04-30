@@ -83,7 +83,7 @@ module DataStructure
       end
 
       def to_s
-        "{#{items.join(',')}}"
+        "{ #{items.join(',')} }"
       end
 
       def inspect
