@@ -3,26 +3,7 @@ require 'data/set'
 module DataStructure::Graph
 
   module QueueGraph
-    include Enumerable
-    attr_reader :order, :size
-
-    def init
-      @nodes = {}
-      @order = 0
-      @size  = 0
-    end
-
-    def empty?
-      ! @nodes.nil?
-    end
-
-    def has_node?(node)
-      ! @nodes[node].nil?
-    end
-
-    def has_edge?(from,to)
-      adjacent(from).include?(to)
-    end
+    include GraphBase
 
     def add_node(node)
       raise NodeTakenError, node if has_node?(node)
@@ -30,8 +11,9 @@ module DataStructure::Graph
       @nodes[node] = {
           out: 0,
           in: 0,
-          attr: {},
+          nodes: {},
           edges: DataStructure::Set::Set.new }
+
       @order += 1
       self
     end
@@ -43,10 +25,6 @@ module DataStructure::Graph
       pull_edges_to(node)
       @order -= 1
       self
-    end
-
-    def get(node)
-      get_node(node)[:attr]
     end
 
     def add_edge(from, to, weight = 1)
@@ -62,7 +40,6 @@ module DataStructure::Graph
     alias_method :connect, :add_edge
 
     def remove_edge(from, to)
-      raise NoSuchEdgeError, from, to unless has_edge?(from, to)
       raise NoSuchEdgeError, from, to unless has_edge?(from, to)
 
       edge = Edge.new(from, to)
@@ -82,53 +59,13 @@ module DataStructure::Graph
       get_node(node)[:edges]
     end
 
-    def nodes
-      @nodes.keys
-    end
-
-    def each_node(&block)
-      nodes.each(&block)
-    end
-    alias_method :each, :each_node
-
     def edges
       nodes.inject(DataStructure::Set::Set.new) do |set, node|
         set.merge! adjacent_edges(node)
       end
     end
 
-    def each_edge(&block)
-      edges.each(&block)
-    end
-
-    def degree(node)
-      get_node(node)[:out]
-    end
-
-    def euler?
-      each_node do |node|
-        return false unless degree(node) % 2 == 0
-      end
-
-      true
-    end
-
-    def regular?
-      degree_ = degree(first)
-      each_node do |node|
-        return false unless degree(node) == degree_
-      end
-
-      true
-    end
-
     private
-
-    def get_node(node)
-      raise NoSuchNodeError, node unless has_node?(node)
-
-      @nodes[node]
-    end
 
     def append_edge(node, edge)
       get_node(node)[:out] += 1
@@ -137,7 +74,7 @@ module DataStructure::Graph
     end
 
     def pull_edge(node, edge)
-      set = get_node(node)[:edges]
+      set = adjacent_edges(node)
       if set.contains? edge
         get_node(node)[:out] -= 1
         get_node(edge.other(node))[:in] -= 1

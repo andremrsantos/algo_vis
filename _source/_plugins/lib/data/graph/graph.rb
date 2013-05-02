@@ -1,3 +1,5 @@
+require 'algorithm/shuffle'
+
 module DataStructure::Graph
 
   class Graph

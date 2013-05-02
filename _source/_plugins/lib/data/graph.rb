@@ -35,6 +35,7 @@ module DataStructure
 end
 
 # require graphs implementations
+require 'data/graph/graph_base'
 require 'data/graph/queue_graph'
 require 'data/graph/graph'
 require 'data/graph/digraph'

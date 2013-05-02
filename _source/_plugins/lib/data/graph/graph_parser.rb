@@ -15,8 +15,13 @@ module DataStructure::Graph
     rule(':')
 
     rule(:int   => /(-|)\d+/).as { |num| num.to_i }
-    rule(:float => /(-|)(\d*\.|)\d+/).as { |num| num.to_f }
+    rule(:float => /(-|)\d*\.\d+/).as { |num| num.to_f }
     rule(:word  => /[\w_][\w_\d]*/)
+
+    rule(:num) do |r|
+      r[:float]
+      r[:int]
+    end
 
     rule(:label) do |r|
       r[:word]
@@ -27,7 +32,7 @@ module DataStructure::Graph
       r['{', :label, ',', :label, '}'].as do |_, f,_, t,_|
         get_graph.add_edge(f, t)
       end
-      r['{', :label,',', :label, ':', :float, '}'].as do |_, f,_, t,_, w,_|
+      r['{', :label,',', :label, ':', :num, '}'].as do |_, f,_, t,_, w,_|
         get_graph.add_edge(f, t, w)
       end
     end

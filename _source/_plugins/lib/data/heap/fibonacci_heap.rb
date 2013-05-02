@@ -1,9 +1,10 @@
 module DataStructure::Heap
+
   class FibonacciHeap < HeapBase
 
     def initialize(type = :min)
       # Define the kind of Heap to be implemented: Min or Max
-      @comparator = Heap::COMPARATOR[type] || Heap::COMPARATOR[:min]
+      @comparator = COMPARATOR[type] || COMPARATOR[:min]
 
       clear
     end
@@ -19,8 +20,9 @@ module DataStructure::Heap
         @next.link(node)
         @next = node if compare(node.value, @next.value)
       end
-
+      @size += 1
       @keys[key] = node
+      self
     end
 
     alias_method :insert, :push
@@ -53,7 +55,7 @@ module DataStructure::Heap
       end
       @keys[removed.key] = nil
 
-      removed.value
+      removed.key
     end
 
     alias_method :remove, :pop
@@ -109,6 +111,7 @@ module DataStructure::Heap
     end
 
     def to_s
+      return '' if @next.nil?
       str = ''
       @next.each_sibling { |node| str << node.to_s }
       str
@@ -144,7 +147,7 @@ module DataStructure::Heap
             degree += 1
           end
           degrees[degree] = root
-          # min = root if min.value == root.value
+          top = root if top.value == root.value
         end
 
       end
@@ -158,13 +161,11 @@ module DataStructure::Heap
       node.value = new_value
       parent = node.parent
 
-      unless parent.nil? && compare(new_value, parent.value)
+      if parent && compare(new_value, parent.value)
         cut(node)
         cascade_cut(parent)
       end
 
-      node.parent = nil
-      @next.link(node)
       @next = node if compare(new_value, @next.value)
     end
 
@@ -228,7 +229,7 @@ module DataStructure::Heap
 
       def add(node)
         node.pop
-        node.parent = node
+        node.parent = self
 
         if child.nil?
           self.child = node
