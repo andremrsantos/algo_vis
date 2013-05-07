@@ -6,9 +6,9 @@ module Algorithm::Graph
     def find
       init
 
-      graph.each_node do |from|
-        graph.each_node do |to|
-          graph.each_node {|by| relax(from, by, to) }
+      graph.each_node do |by|
+        graph.each_node do |from|
+          graph.each_node {|to| relax(from, by, to) }
         end
       end
 

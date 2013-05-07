@@ -1,29 +1,36 @@
 module Report::Algorithm
 
-  def self.report(report = Report::Report.new, &block)
+  def self.report(report = Report::ReportEntry.new, &block)
     report.add(:time, Report::realtime(&block))
   end
 
   def self.report_stat(sample = 100, report = Report::Report.new, &block)
-    reports = (1..sample).collect { report(&block) }
+    samples = Report::Report.new
+    (1..sample).each { samples.append report(&block) }
 
-    average   = reports.inject(0) do |sum, report|
-      sum += report.get(:time)
-    end / sample
+    average = samples.inject(0) do |sum, report|
+                sum += report.get(:time)
+              end
+    average = average.to_f/sample
 
-    deviation = reports.inject(0) do |sum, report|
-      sum += (average - report.get(:time))**2
-    end
-    deviation = Math.sqrt(deviation/sample)
+    st_dev = samples.inject(0) do |sum, report|
+                  sum += (average - report.get(:time))**2
+                end
+    st_dev = Math.sqrt(st_dev/sample)
 
-    min = reports.min_by {|report| report.get(:time) }
-    max = reports.max_by {|report| report.get(:time) }
+    min = samples.min_by {|report| report.get(:time) }.get(:time)
+    max = samples.max_by {|report| report.get(:time) }.get(:time)
 
-    report.add(:avg, average).
-        add(:deviation, deviation).
+    entry = Report::ReportEntry.new
+
+    entry.add(:sample, sample).
+        add(:avg, average).
+        add(:st_dev, st_dev).
         add(:min, min).
         add(:max, max)
-    [report, reports]
+
+    report.append(entry)
+    [report, samples]
   end
 
 end

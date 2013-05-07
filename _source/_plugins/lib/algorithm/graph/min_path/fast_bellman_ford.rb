@@ -28,7 +28,7 @@ module Algorithm::Graph
 
     def update(edge)
       super
-      @queue << edge.to unless @queue.contains?(edge.to)
+      @queue << edge.to unless @queue.include?(edge.to)
     end
 
   end

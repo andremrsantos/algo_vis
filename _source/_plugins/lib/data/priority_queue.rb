@@ -6,7 +6,11 @@ module DataStructure
 
       def initialize(&comparator)
         @keys = {}
-        @comparator = comparator || lambda {|one, other| one < other}
+        @comparator = comparator || ->(one, other) { one < other}
+      end
+
+      def empty?
+        @keys.empty?
       end
 
       def has_key?(key)
@@ -26,8 +30,9 @@ module DataStructure
 
       def pop
         min = nil
-        @keys.each { |key| min = key if min.nil? || compare(key, min) }
+        @keys.each_key { |key| min = key if min.nil? || compare(key, min) }
         @keys.delete(min)
+        min
       end
 
       alias_method :shift, :pop

@@ -8,75 +8,87 @@ module DataStructure::Heap
 
       # Define working variables
       @queue = []
-      @keys = []
-      @key_position = []
+      @keys  = {}
+      @size  = 0
     end
 
-    def insert(index, key)
-      throw DataStructure::IndexTakenError index if contains?(index)
+    def size
+      return @size
+    end
 
-      @key_position[index] = size
-      @queue[size] = index
-      @keys[index] = key
+    def contains?(key)
+      ! get(key).nil?
+    end
+
+    def insert(key, value = key)
+      throw DataStructure::IndexTakenError key if contains?(key)
+
+      @queue[size] = key
+      @keys[key]   = { value: value, position: size }
+      @size += 1
       swim
+      self
     end
 
     alias_method :push, :insert
 
-    def head
-      key_at(first)
+    def top
+      @queue.first
     end
 
     def remove
-      exchange(first, size-1)
+      exchange(first, last)
 
-      min = @queue.pop
+      head = @queue.pop
+      @size -= 1
       sink
 
-      @key_position[min] = nil
-      @keys.delete_at(min)
+      @keys.delete(head)
+      head
     end
 
     alias_method :pop, :remove
 
-    def change_key(index, key)
-      throw DataStructure::NoSuchElementError index unless contains?(index)
+    def change_key(key, new_value)
+      throw DataStructure::NoSuchElementError key unless contains?(key)
 
-      @keys[index] = key
-      print '=======>'
-      puts @key_position[index]
+      get(key)[:value] = new_value
 
-      sink(@key_position[index])
-      swim(@key_position[index])
-    end
-
-    def contains?(index)
-      !get(index).nil?
-    end
-
-    def get(index)
-      @keys[index]
-    end
-
-    def size
-      return @queue.size
+      sink(position(key))
+      swim(position(key))
     end
 
     def to_s
       node_to_s
     end
 
-    protected
+    private
 
-    def last
-      @queue.size - 1
+    def get(key)
+      @keys[key]
+    end
+
+    def key_at(node)
+      @queue[node]
+    end
+
+    def value(key)
+      get(key)[:value]
+    end
+
+    def position(key)
+      get(key)[:position]
     end
 
     def first
       0
     end
 
-    def swim(node=last)
+    def last
+      size - 1
+    end
+
+    def swim(node = last)
       while better_than_father?(node)
         father = father(node)
         exchange(node, father)
@@ -92,7 +104,7 @@ module DataStructure::Heap
       (node-1)/2
     end
 
-    def sink(node=first)
+    def sink(node = first)
       while has_sons(node)
         son = next_son(node)
         if compare(son, node)
@@ -110,7 +122,7 @@ module DataStructure::Heap
 
     def next_son(node)
       son_a, son_b = sons(node)
-      (son_b < size && compare(son_b, son_a)) ? son_b : son_a
+      (son_b <= last && compare(son_b, son_a)) ? son_b : son_a
     end
 
     def sons(node)
@@ -119,22 +131,18 @@ module DataStructure::Heap
     end
 
     def exchange(from, to)
-      # Update Key reference
-      @key_position[@queue[from]] = from
-      @key_position[@queue[to]] = to
-
       # Update Priority Queue
       tmp = @queue[from]
       @queue[from] = @queue[to]
       @queue[to] = tmp
+
+      # Update Position
+      get(key_at(from))[:position] = from
+      get(key_at(to))[:position] = to
     end
 
     def compare(x, y)
-      super(key_at(x), key_at(y))
-    end
-
-    def key_at(node)
-      get(@queue[node])
+      super(value(key_at(x)), value(key_at(y)))
     end
 
     def node_to_s(node=first, lvl=0)
@@ -142,7 +150,7 @@ module DataStructure::Heap
 
       son_a, son_b = sons(node)
       str = '| '*lvl
-      str << "\\_(#{@key_position[node]}) #{key_at(node)}\n"
+      str << "\\_(#{@queue[node]}) #{value(@queue[node])}\n"
       str << node_to_s(son_a, lvl+1)
       str << node_to_s(son_b, lvl+1)
     end
