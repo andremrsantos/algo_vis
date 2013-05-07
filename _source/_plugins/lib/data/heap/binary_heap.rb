@@ -4,7 +4,7 @@ module DataStructure::Heap
 
     def initialize(type = :min)
       # Define the kind of Heap to be implemented: Min or Max
-      @comparator = Heap::COMPARATOR[type] || Heap::COMPARATOR[:min]
+      @comparator = COMPARATOR[type] || COMPARATOR[:min]
 
       # Define working variables
       @queue = []
@@ -21,6 +21,8 @@ module DataStructure::Heap
       swim
     end
 
+    alias_method :push, :insert
+
     def head
       key_at(first)
     end
@@ -35,12 +37,17 @@ module DataStructure::Heap
       @keys.delete_at(min)
     end
 
+    alias_method :pop, :remove
+
     def change_key(index, key)
       throw DataStructure::NoSuchElementError index unless contains?(index)
 
       @keys[index] = key
-      sink(index)
-      swim(index)
+      print '=======>'
+      puts @key_position[index]
+
+      sink(@key_position[index])
+      swim(@key_position[index])
     end
 
     def contains?(index)
@@ -70,19 +77,19 @@ module DataStructure::Heap
     end
 
     def swim(node=last)
-      while has_better_father?(node)
+      while better_than_father?(node)
         father = father(node)
         exchange(node, father)
         node = father
       end
     end
 
-    def has_better_father?(node)
-      node > 0 && compare(father(node), node)
+    def better_than_father?(node)
+      node > 0 && compare(node, father(node))
     end
 
     def father(node)
-      (node+1)/2
+      (node-1)/2
     end
 
     def sink(node=first)
@@ -91,6 +98,8 @@ module DataStructure::Heap
         if compare(son, node)
           exchange(son, node)
           node = son
+        else
+          break
         end
       end
     end
@@ -110,13 +119,14 @@ module DataStructure::Heap
     end
 
     def exchange(from, to)
+      # Update Key reference
+      @key_position[@queue[from]] = from
+      @key_position[@queue[to]] = to
+
       # Update Priority Queue
       tmp = @queue[from]
       @queue[from] = @queue[to]
       @queue[to] = tmp
-      # Update Key reference
-      @key_position[@queue[from]] = from
-      @key_position[@queue[to]] = to
     end
 
     def compare(x, y)
@@ -132,7 +142,7 @@ module DataStructure::Heap
 
       son_a, son_b = sons(node)
       str = '| '*lvl
-      str << "\\_#{key_at(node)}\n"
+      str << "\\_(#{@key_position[node]}) #{key_at(node)}\n"
       str << node_to_s(son_a, lvl+1)
       str << node_to_s(son_b, lvl+1)
     end

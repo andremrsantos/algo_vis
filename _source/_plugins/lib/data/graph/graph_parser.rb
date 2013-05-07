@@ -69,11 +69,11 @@ module DataStructure::Graph
     private
 
     def self.set_type(klass)
-      @type = klass
+      @graph= klass.new
     end
 
     def self.get_graph
-      @graph ||= @type.new
+      @graph ||= Graph.new
     end
 
   end

@@ -27,6 +27,14 @@ module Algorithm::Graph
       @graph.each_node {|n| @nodes[n] = attr.clone}
     end
 
+    def distance(node)
+      get(node)[:distance]
+    end
+
+    def parent(node)
+      get(node)[:parent]
+    end
+
     def relax(edge)
       if get(edge.to)[:distance] > get(edge.from)[:distance] + edge.weight
         update(edge)
@@ -43,4 +51,7 @@ module Algorithm::Graph
 end
 
 require 'algorithm/graph/min_path/dijkstra'
+require 'algorithm/graph/min_path/bellman_ford'
+require 'algorithm/graph/min_path/fast_bellman_ford'
+require 'algorithm/graph/min_path/floyd_marshall'
 

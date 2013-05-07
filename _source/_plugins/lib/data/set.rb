@@ -16,8 +16,13 @@ module DataStructure
         @items.size
       end
 
-      def add(key)
-        @items[key] = true
+      def get(key)
+        @items[key]
+      end
+
+      def add(key, value = key)
+        raise ArgumentError 'Nil not allowed' if key.nil? or value.nil?
+        @items[key] = value
         self
       end
 

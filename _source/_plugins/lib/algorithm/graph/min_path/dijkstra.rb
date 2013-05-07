@@ -5,8 +5,9 @@ module Algorithm::Graph
   class DijkstraMinPath
     include MinPath
 
-    def initialize(graph)
-      super
+    def initialize(graph, pq = DataStructure::Heap::FibonacciHeap)
+      super(graph)
+      @pq = pq
     end
 
     def find(start)
@@ -15,7 +16,7 @@ module Algorithm::Graph
       init distance: INFINITY, parent: nil
       get(start)[:distance] = 0
 
-      @queue = DataStructure::Heap::FibonacciHeap.new()
+      @queue = @pq.new()
       graph.each_node{|n| @queue.push(n, get(n)[:distance]) }
 
       until @queue.empty?
@@ -42,15 +43,15 @@ module Algorithm::Graph
 
     def update(edge)
       super
-      if @queue.contains? edge.to
+      if @queue.contains?(edge.to)
         @queue.change_key(edge.to, get(edge.to)[:distance])
       end
     end
 
   end
 
-  def self.dijkstra_min_path(graph, start)
-    DijkstraMinPath.new(graph).find(start)
+  def self.dijkstra_min_path(graph, start, pq=DataStructure::Heap::FibonacciHeap)
+    DijkstraMinPath.new(graph, pq).find(start)
   end
 
 end

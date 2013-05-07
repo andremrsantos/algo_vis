@@ -5,6 +5,16 @@ module DataStructure::Graph
   module QueueGraph
     include GraphBase
 
+    def has_edge?(from, to)
+      edge = build(from, to)
+      adjacent(from).include?(to)
+    end
+
+    def get_edge(from, to)
+      edge = build(from, to)
+      adjacent_edges(from).get(edge)
+    end
+
     def add_node(node)
       raise NodeTakenError, node if has_node?(node)
 
@@ -67,6 +77,10 @@ module DataStructure::Graph
 
     private
 
+    def build(from, to, weight = 1)
+      Edge.new(from, to, weight)
+    end
+
     def append_edge(node, edge)
       get_node(node)[:out] += 1
       get_node(edge.other(node))[:in] += 1
@@ -127,12 +141,14 @@ module DataStructure::Graph
     end
 
     def ==(edge)
-      unless edge.kind_of? Edge
+      unless edge.kind_of? self.class
         raise ArgumentError, 'Compared obj must be an Edge'
       end
 
-      edge.edges == [@node, @other]
+      edge.nodes == [@node, @other]
     end
+
+    alias_method :eql?, :==
 
     def hash
       @node.hash * 43 + @other.hash * 47

@@ -6,13 +6,13 @@ module Algorithm::Graph
     include GraphGenerator
 
     def initialize(size, limit)
-      raise ArgumentError 'Unreachable condition' if limit > size_limit
       super(size)
+      raise ArgumentError 'Unreachable condition' if limit > size_limit
       @limit = limit
     end
 
     def generate(&block)
-      block ||= -> { rand * 10 }
+      block ||= lambda {|_,_| rand * 10 }
 
       build_graph
 
@@ -30,7 +30,7 @@ module Algorithm::Graph
     private
 
     def reached?
-      @graph.size >= @edges
+      @graph.size >= @limit
     end
 
     def size_limit
@@ -69,6 +69,12 @@ module Algorithm::Graph
         end
       end
       arr
+    end
+
+    private
+
+    def build_graph
+      super(DataStructure::Graph::Digraph)
     end
 
   end

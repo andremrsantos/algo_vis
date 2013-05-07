@@ -19,7 +19,7 @@ module Algorithm::Graph
 
   end
 
-  class BinomialDigraphGenerator < BinomialDigraphGenerator
+  class BinomialDigraphGenerator < BinomialGraphGenerator
 
     private
 

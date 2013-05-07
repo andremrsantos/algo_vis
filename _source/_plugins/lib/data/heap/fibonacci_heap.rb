@@ -136,14 +136,14 @@ module DataStructure::Heap
         else
           until degrees[degree].nil?
             other = degrees[degree]
-            smaller, larger = if compare(other.value, root.value)
-                                [root, other]
-                              else
-                                [other, root]
-                              end
-            larger.add(smaller)
+            worst, better = if compare(other.value, root.value)
+                              [root, other]
+                            else
+                              [other, root]
+                            end
+            better.add(worst)
             degrees[degree] = nil
-            root = larger
+            root = better
             degree += 1
           end
           degrees[degree] = root

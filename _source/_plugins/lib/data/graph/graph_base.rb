@@ -26,6 +26,10 @@ module DataStructure::Graph
       get_node(node)[:nodes]
     end
 
+    def get_edge(from, to)
+      adjacent_edges(from).find {|edge| edge.other(from) == to}
+    end
+
     def nodes
       @nodes.keys
     end
@@ -35,6 +39,10 @@ module DataStructure::Graph
     end
 
     alias_method :each, :each_node
+
+    def get_weight(from, to)
+
+    end
 
     def each_edge(&block)
       edges.each(&block)

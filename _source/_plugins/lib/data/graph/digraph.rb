@@ -8,7 +8,7 @@ module DataStructure::Graph
       add_node(from) unless has_node?(from)
       add_node(to)   unless has_node?(to)
 
-      edge = DirectedEdge.new(from, to, weight)
+      edge = build(from, to, weight)
 
       @size += 1
       append_edge(from, edge)
@@ -18,7 +18,7 @@ module DataStructure::Graph
     def remove_edge(from, to)
       raise NoSuchEdgeError from, to unless has_edge?(from, to)
 
-      edge = DirectedEdge.new(from, to)
+      edge = build(from, to)
 
       pull_edge(from, edge)
       self
@@ -40,18 +40,10 @@ module DataStructure::Graph
       graph
     end
 
-    def self.complete(size)
-      @graph = Digraph.new
-      (1..size).each { |i| @graph.add_node(i) }
+    private
 
-      for i in 1..size
-        for j in (i+1)..size
-          @graph.add_edge(i, j)
-          @graph.add_edge(j, i)
-        end
-      end
-
-      @graph
+    def build(from, to, weight = 1)
+      DirectedEdge.new(from, to ,weight)
     end
 
   end

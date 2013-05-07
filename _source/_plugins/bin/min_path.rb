@@ -12,5 +12,22 @@ graph = DataStructure::Graph::load(graph)
 puts graph
 puts
 
-dij = Algorithm::Graph::dijkstra_min_path(graph, 's')
-puts dij
+puts Algorithm::Graph::dijkstra_min_path(graph, 's')
+puts
+
+
+graph = File.readlines(File.dirname(__FILE__) + '/data/graph/lista04_05.gpy')
+graph = DataStructure::Graph::load(graph)
+
+puts Algorithm::Graph::dijkstra_min_path(graph, 1)
+puts
+
+graph = File.readlines(File.dirname(__FILE__) + '/data/graph/floyd_graph.gpy')
+graph = DataStructure::Graph::load(graph)
+
+puts Algorithm::Graph::DijkstraMinPath.
+         new(graph, DataStructure::Heap::BinaryHeap).find(1)
+puts
+
+puts Algorithm::Graph::floyd_marshall_min_path(graph)
+puts
