@@ -42,8 +42,8 @@ avg_report   = File.open(folder + '/fixed_size.tab', 'w')
 end
 puts "Completed FIXED SIZE"
 
-sample_report= File.open(folder + '/fixed_order_report.tab', 'w')
-avg_report   = File.open(folder + '/fixed_order.tab', 'w')
+sample_report= File.open(folder + '/bell_order_report.tab', 'w')
+avg_report   = File.open(folder + '/bell_order.tab', 'w')
 
 # Fixed order
 (20..500).each do |n|

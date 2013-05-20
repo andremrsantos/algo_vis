@@ -31,8 +31,8 @@ module DataStructure::Graph
     def remove_node(node)
       raise NoSuchNodeError, node unless has_node?(node)
 
+      pull_edges(node)
       @nodes.delete(node)
-      pull_edges_to(node)
       @order -= 1
       self
     end
@@ -50,13 +50,9 @@ module DataStructure::Graph
     alias_method :connect, :add_edge
 
     def remove_edge(from, to)
-      raise NoSuchEdgeError, from, to unless has_edge?(from, to)
+      edge = build(from, to)
 
-      edge = Edge.new(from, to)
-
-      @size -= 1
-      pull_edge(from, edge)
-      pull_edge(to, edge)
+      @size -= 1 if pull_edge(from, edge) and pull_edge(to, edge)
       self
     end
     alias_method :disconnect, :remove_edge
@@ -96,9 +92,13 @@ module DataStructure::Graph
       end
     end
 
-    def pull_edges_to(node)
+    def pull_edges(node)
       each_node do |n|
-        pull_edge(n, Edge.new(n, node))
+        remove_edge(n,node)
+      end
+
+      adjacent(node).each do |adj|
+        remove_edge(node, adj)
       end
     end
 

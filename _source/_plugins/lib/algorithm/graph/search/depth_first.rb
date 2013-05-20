@@ -9,7 +9,6 @@ module Algorithm::Graph
 
     def search_all
       init
-
       each_node { |node| search(node) }
       self
     end
@@ -28,8 +27,8 @@ module Algorithm::Graph
 
     private
 
-    def init(hash = {color: :white, parent: nil})
-      super
+    def init
+      super({color: :white, parent: nil})
     end
 
     def visit(node)

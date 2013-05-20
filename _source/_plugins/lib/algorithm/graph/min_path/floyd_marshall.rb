@@ -15,6 +15,15 @@ module Algorithm::Graph
       self
     end
 
+    def has_negative_cycle?
+      graph.each_node do |from|
+        graph.each_node do |to|
+          return true if distance(from)[to] < 0
+        end
+      end
+      return true
+    end
+
     def to_s
       str = "< #{self.class} >\n         \t"
       graph.each_node {|n| str << "%4s  \t" % n }

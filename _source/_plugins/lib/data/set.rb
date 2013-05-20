@@ -31,7 +31,7 @@ module DataStructure
       alias_method :insert, :add
 
       def delete(key)
-        @items.delete(key) if has?(key)
+        @items.delete(key) if contains?(key)
         self
       end
 

@@ -16,8 +16,7 @@ module Algorithm::Graph
     end
 
     def sort
-      @nodes = TopologicalDepthFirstSearch.new(graph).search.nodes
-      self
+      @nodes = TopologicalDepthFirstSearch.new(graph).search_all.nodes
     end
 
     def to_s
@@ -34,7 +33,7 @@ module Algorithm::Graph
 
       protected
 
-      def init(hash = {})
+      def init
         super
         @nodes = []
       end

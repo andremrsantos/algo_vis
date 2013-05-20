@@ -3,7 +3,7 @@ module DataStructure::Graph
   class Digraph < Graph
 
     def add_edge(from, to, weight = 1)
-      raise EdgeTakenError from, to if has_edge?(from, to)
+      raise EdgeTakenError, from, to if has_edge?(from, to)
 
       add_node(from) unless has_node?(from)
       add_node(to)   unless has_node?(to)
@@ -16,11 +16,7 @@ module DataStructure::Graph
     end
 
     def remove_edge(from, to)
-      raise NoSuchEdgeError from, to unless has_edge?(from, to)
-
-      edge = build(from, to)
-
-      pull_edge(from, edge)
+      @size -=1 if pull_edge(from, build(from, to))
       self
     end
 

@@ -25,7 +25,7 @@ module Algorithm::Graph
     end
 
     def each_node(&block)
-      @visit_order.each(&block)
+      graph.each_node(&block)
     end
 
     alias_method :each, :each_node

@@ -23,7 +23,7 @@ sample_report= File.open(folder + '/bell_size_report.tab', 'w')
 avg_report   = File.open(folder + '/bell_size.tab', 'w')
 
 # Fixed size
-(20..500).each do |n|
+(20..300).each do |n|
   graph = Algorithm::Graph::limited_edges_generator(n, 180, :digraph)
 
   process.each_key do |dt|
@@ -39,11 +39,11 @@ avg_report   = File.open(folder + '/bell_size.tab', 'w')
 end
 puts "Completed FIXED SIZE"
 
-sample_report= File.open(folder + '/fixed_order_report.tab', 'w')
-avg_report   = File.open(folder + '/fixed_order.tab', 'w')
+sample_report= File.open(folder + '/bell_order_report.tab', 'w')
+avg_report   = File.open(folder + '/bell_order.tab', 'w')
 
 # Fixed order
-(20..500).each do |n|
+(20..300).each do |n|
   graph = Algorithm::Graph::limited_edges_generator(50, n*3, :digraph)
 
   process.each_key do |dt|

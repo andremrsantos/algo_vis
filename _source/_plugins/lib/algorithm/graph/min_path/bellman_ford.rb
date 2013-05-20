@@ -16,6 +16,15 @@ module Algorithm::Graph
       self
     end
 
+    def to_s
+      graph.nodes.inject("< #{self.class} >\n") do |str, n|
+        str << "Node %5s distance: %3s parent: %5s\n" % [n,
+                                                         get(n)[:distance],
+                                                         get(n)[:parent]||'-']
+
+      end
+    end
+
   end
 
   def self.bellman_ford_min_path(graph, source)
